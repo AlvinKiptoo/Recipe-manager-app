@@ -5,3 +5,13 @@
   --text: hsla(0, 0%, 100%, 0.88);
 }
 
+.add-recipe-form {
+  margin: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.home-page {
+  margin: 20px;
+}
