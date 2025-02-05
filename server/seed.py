@@ -44,6 +44,7 @@ if __name__ == '__main__':
             category = rc(Category.query.all())  # Randomly pick a category
             recipe = Recipe(name=recipe_name, description=fake.text(), category_id=category.id)
             db.session.add(recipe)
+            db.session.commit()
 
             # Seed Ingredients for each Recipe
             for _ in range(randint(3, 7)):  # Each recipe will have 3-7 ingredients

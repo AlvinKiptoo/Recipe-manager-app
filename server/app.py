@@ -19,18 +19,6 @@ api = Api(app)
 
 # Basic route to test the server
 
-from functools import wraps
-
-def error_handler(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        try:
-            return f(*args, **kwargs)
-        except Exception as e:
-            return jsonify(error=str(e)), 500
-    return decorated_function
-
-
 @app.route('/')
 def index():
     return '<h1>Recipe Manager API</h1>'
@@ -38,7 +26,6 @@ def index():
 # CRUD Routes for Recipes
 
 @app.route('/recipes', methods=['GET', 'POST'])
-@error_handler
 def manage_recipes():
     if request.method == 'GET':
         recipes = Recipe.query.all()
@@ -57,7 +44,6 @@ def manage_recipes():
 
 
 @app.route('/recipes/<int:id>', methods=['GET', 'PUT', 'DELETE'])
-@error_handler
 def recipe_detail(id):
     recipe = Recipe.query.get(id)
     
@@ -83,7 +69,6 @@ def recipe_detail(id):
 # CRUD Routes for Categories (optional)
 
 @app.route('/categories', methods=['GET', 'POST'])
-@error_handler
 def manage_categories():
     try:
         if request.method == 'GET':
@@ -104,7 +89,6 @@ def manage_categories():
 # CRUD Routes for Ingredients (optional)
 
 @app.route('/ingredients', methods=['GET', 'POST'])
-@error_handler
 def manage_ingredients():
     if request.method == 'GET':
         ingredients = Ingredient.query.all()
@@ -125,7 +109,6 @@ def manage_ingredients():
 
 # User and FavoriteRecipes routes (optional)
 @app.route('/favorite-recipes', methods=['POST'])
-@error_handler
 def add_to_favorites():
     data = request.get_json()
     new_favorite = FavoriteRecipes(
