@@ -10,7 +10,7 @@ function Home() {
 
   useEffect(() => {
     // Fetch all recipes
-    fetch('/api/recipes')
+    fetch('http://localhost:5555/recipes')
       .then((response) => response.json())
       .then((data) => {
         if (Array.isArray(data)) {
@@ -26,7 +26,7 @@ function Home() {
       });
 
     // Fetch categories
-    fetch('/api/categories')
+    fetch('http://localhost:5555/categories')
       .then((response) => response.json())
       .then((data) => {
         if (Array.isArray(data)) {
@@ -43,7 +43,7 @@ function Home() {
     setSelectedCategory(e.target.value);
     setLoadingFiltered(true); // Set loading state while fetching filtered recipes
     // Fetch recipes filtered by category
-    fetch(`/api/recipes?category=${e.target.value}`)
+    fetch(`http://localhost:5555/recipes?category=${e.target.value}`)
       .then((response) => response.json())
       .then((data) => {
         if (Array.isArray(data)) {
@@ -64,7 +64,11 @@ function Home() {
       <h1>Recipe List</h1>
 
       {/* Category filter dropdown */}
-      <select onChange={handleCategoryChange} style={{ marginBottom: '20px' }}>
+      <select 
+        onChange={handleCategoryChange} 
+        value={selectedCategory} // Set the dropdown to reflect the selected category
+        style={{ marginBottom: '20px' }}
+      >
         <option value="">All Categories</option>
         {categories.map((category) => (
           <option key={category.id} value={category.id}>
