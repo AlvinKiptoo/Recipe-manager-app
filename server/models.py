@@ -17,7 +17,7 @@ class Recipe(db.Model, SerializerMixin):
     # Relationship with Ingredients
     ingredients = db.relationship('Ingredient', backref='recipe', lazy=True)
     # Relationship with FavoriteRecipes (Many-to-Many)
-    favorites = db.relationship('FavoriteRecipes', backref='favorite_recipes', lazy=True)
+    favorites = db.relationship('FavoriteRecipes', back_populates='recipe', lazy=True)
 
     # Association Proxy for ingredients' names
     ingredient_names = association_proxy('ingredients', 'name')
@@ -89,7 +89,7 @@ class FavoriteRecipes(db.Model, SerializerMixin):
 
     # Relationship with User and Recipe
     user = db.relationship('User', backref='favorites', lazy=True)
-    recipe = db.relationship('Recipe', backref='favorite_recipes', lazy=True)
+    recipe = db.relationship('Recipe', back_populates='favorites')
 
     # Method to convert to dictionary for JSON response
     def to_dict(self):
