@@ -1,9 +1,27 @@
-from flask_restful import Resource, Api
-from flask import request, jsonify
-from config import app, db
-from models import Recipe, Category, Ingredient, FavoriteRecipes
+import os
+from flask_cors import CORS
+from flask_migrate import Migrate
+from sqlalchemy import MetaData
+from dotenv import load_dotenv 
+load_dotenv()
+from flask import Flask, request, jsonify
+from flask_restful import Api, Resource
+from models import Recipe, Category, Ingredient, FavoriteRecipes, app, db
 
-# Initialize the API
+
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.json.compact = False
+
+metadata = MetaData(naming_convention={
+    "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
+})
+
+migrate = Migrate(app, db)
+db.init_app(app)
+
+CORS(app)
+
 api = Api(app)
 
 class RecipeResource(Resource):
@@ -46,7 +64,6 @@ class RecipeResource(Resource):
         db.session.commit()
         return '', 204
 
-# Register Resources with API
 api.add_resource(RecipeResource, '/recipes', '/recipes/<int:id>')
 
 class CategoryResource(Resource):
@@ -59,7 +76,7 @@ class CategoryResource(Resource):
         new_category = Category(name=data['name'])
         db.session.add(new_category)
         db.session.commit()
-        return jsonify(new_category.to_dict()), 201
+        return new_category.to_dict(), 201
 
 api.add_resource(CategoryResource, '/categories')
 
@@ -95,7 +112,6 @@ class FavoriteRecipesResource(Resource):
 
 api.add_resource(FavoriteRecipesResource, '/favorite-recipes')
 
-# Error handling route not found
 @app.errorhandler(404)
 def page_not_found(e):
     return jsonify(error="Not found"), 404

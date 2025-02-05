@@ -1,7 +1,12 @@
 from datetime import datetime
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
-from config import db
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+
+app = Flask(__name__)
+
+db = SQLAlchemy()
 
 # Define the Recipe model
 class Recipe(db.Model, SerializerMixin):
