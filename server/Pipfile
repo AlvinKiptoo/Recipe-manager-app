@@ -4,7 +4,6 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-ipdb = "0.13.9"
 flask = "*"
 flask-sqlalchemy = "*"
 Werkzeug = "*"
@@ -13,13 +12,14 @@ sqlalchemy-serializer = "*"
 flask-restful = "*"
 flask-cors = "*"
 faker = "*"
-pipenv = "*"
-shell = "*"
 python-dotenv = "*"
 gunicorn = "*"
 psycopg2-binary = "*"
 
+[dev-packages]
+ipdb = "0.13.9"
+shell = "*"
+pipenv = "*"
+
 [requires]
 python_full_version = "3.8.13"
-
-[dev-packages]
