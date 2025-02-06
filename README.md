@@ -134,3 +134,4 @@ This project is open-source and available under the [MIT License](LICENSE).
 
 The deployed backend link: "https://recipe-manager-app.onrender.com"
 
+The deployed frontend link: "https://alvins-app.netlify.app/"
